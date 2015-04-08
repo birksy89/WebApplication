@@ -34,14 +34,17 @@
                         <p>@Html.Raw(team.squadMarketValue.ToString())</p>
                         @{
             var responsePlayers = client.DownloadString(new Uri(team._links.players.href));
-            var jPlayers = JsonConvert.DeserializeObject<WebApplication.Models.Players>(responsePlayers);
+            var jPlayers = JsonConvert.DeserializeObject<WebApplication.Models.PlayerRootobject>(responsePlayers);
+
+
                         }
-                        
-@foreach (WebApplication.Models.Players players in jPlayers.players)
-{
-    players.name;
-}
-                      
+
+                        @foreach (WebApplication.Models.Player player in jPlayers.players)
+                        {
+                            <p>@player.name - @player.jerseyNumber</p>
+                        }
+
+
                         <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
                     </div>
                 </div>
