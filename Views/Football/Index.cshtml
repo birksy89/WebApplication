@@ -19,35 +19,28 @@
 
     <div class="row">
 
-        @foreach (WebApplication.Models.Team team in j.teams)
+        @foreach (WebApplication.Models.Team team in j.teams.OrderBy(t => t.name))
         {
 
+            //Get Numerical Code To ID Team
+            int TeamID = Convert.ToInt32(team._links.self.href.Split('/').Last());
+
             <div class="col-md-3">
+                <div class="thumbnail text-center">
+                    <a href="@Url.Action("Details", new { id = TeamID, name = team.name })" class="text-center">
+                        <img src="@team.crestUrl"  style="max-height:200px" />
+                        </a>
+                        <div class="caption">
+                            <h4>@team.name</h4>
+                            <p>@team.code</p>
+                            <p>@Html.Raw(team.squadMarketValue.ToString())</p>
 
 
-
-                <div class="thumbnail">
-                    <img src="@team.crestUrl" class="img-responsive" style="max-height:200px" />
-                    <div class="caption">
-                        <h4>@team.name</h4>
-                        <p>@team.code</p>
-                        <p>@Html.Raw(team.squadMarketValue.ToString())</p>
-                        @{
-            var responsePlayers = client.DownloadString(new Uri(team._links.players.href));
-            var jPlayers = JsonConvert.DeserializeObject<WebApplication.Models.PlayerRootobject>(responsePlayers);
-
-
-                        }
-
-                        @foreach (WebApplication.Models.Player player in jPlayers.players)
-                        {
-                            <p>@player.name - @player.dateOfBirth</p>
-                        }
-
-
-                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                    </div>
-                </div>
+                            <p>
+                                @Html.ActionLink("Read More", "Details", new { id = TeamID, name = team.name }, new { @class = "btn btn-primary" })
+                            </p>
+                        </div>
+</div>
             </div>
         }
 
