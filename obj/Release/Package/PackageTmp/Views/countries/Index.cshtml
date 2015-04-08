@@ -1,0 +1,122 @@
+﻿@model IEnumerable<WebApplication.Models.country>
+
+@using Newtonsoft.Json;
+
+@{
+    ViewBag.Title = "Index";
+
+
+
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<hr />
+
+
+
+
+  
+
+
+
+
+<div class="row">
+    @foreach (var item in Model.OrderBy(item=>item.Name))
+    {
+
+        <div class="col-md-4">
+            
+
+           
+
+            <div class="thumbnail">
+              
+                <a  href="@Url.Action("Details", new { id = item.Code })">
+                    <img src="~/Content/Graphics/Flags/@(item.Code2).png" />
+                </a>
+
+                <div class="caption">
+                    <h3>@Html.ActionLink(item.Name, "Details", new { id = item.Code })</h3>
+                    <p>@item.Continent</p>
+                    <p>
+                        @Html.ActionLink("Read More", "Details", new { id = item.Code }, new { @class = "btn btn-primary" })
+
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Code }, new { @class = "btn btn-success" })
+
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Code }, new { @class = "btn btn-danger" })
+                    </p>
+                </div>
+            </div>
+
+            
+
+
+
+        </div>
+
+    }
+
+</div>
+
+
+
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                
+               
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Continent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Region)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SurfaceArea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IndepYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Population)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LifeExpectancy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GNP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GNPOld)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocalName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GovernmentForm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HeadOfState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Capital)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code2)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Code }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Code }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Code })
+            </td>
+        </tr>
+    }
+
+    </table>

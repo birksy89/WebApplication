@@ -1,0 +1,57 @@
+﻿@using Newtonsoft.Json;
+@using Newtonsoft.Json.Linq;
+
+@{ViewBag.Title = "Index";}
+
+
+<h2>Football</h2>
+
+@{
+
+    var client = new WebClient();
+    client.Headers.Add("X-Auth-Token", "ea93b0d4d7724762b54ece5762079114");
+    var response = client.DownloadString(new Uri("http://api.football-data.org/alpha/soccerseasons/354/teams"));
+
+
+
+    var j = JsonConvert.DeserializeObject<WebApplication.Models.Rootobject>(response);
+
+
+    <div class="row">
+
+        @foreach (WebApplication.Models.Team team in j.teams)
+        {
+
+            <div class="col-md-3">
+
+
+
+                <div class="thumbnail">
+                    <img src="@team.crestUrl" class="img-responsive" style="max-height:200px" />
+                    <div class="caption">
+                        <h4>@team.name</h4>
+                        <p>@team.code</p>
+                        <p>@Html.Raw(team.squadMarketValue.ToString())</p>
+                        @{
+            var responsePlayers = client.DownloadString(new Uri(team._links.players.href));
+            var jPlayers = JsonConvert.DeserializeObject<WebApplication.Models.Players>(responsePlayers);
+                        }
+                        
+@foreach (WebApplication.Models.Players players in jPlayers.players)
+{
+    players.name;
+}
+                      
+                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    //I've added this to clean up?
+    client.Dispose();
+}
+
+
+

@@ -1,0 +1,55 @@
+﻿@{
+
+   
+    ViewBag.Title = "Index";
+
+
+    var webGet = new HtmlAgilityPack.HtmlWeb();
+    var document = webGet.Load("http://purplecs.com");
+
+    
+    
+
+}
+
+<h2>Index</h2>
+
+@{var metaTags = document.DocumentNode.SelectNodes("//meta");}
+    
+@if (metaTags != null)
+{
+   foreach (var tag in metaTags)
+   {
+      if (tag.Attributes["name"] != null && tag.Attributes["content"] != null)
+      {
+         
+    <p>@tag.Attributes["content"].Value</p>
+      }
+      else
+      {
+        
+      }
+   }
+}
+
+@{var images = document.DocumentNode.SelectNodes("//img");}
+
+@if (images != null)
+{
+    foreach (var image in images)
+    {
+        if (image.Attributes["src"] != null)
+        {
+
+            <img src="http://www.purplecs.com/@image.Attributes["src"].Value" />
+        }
+        else
+        {
+
+        }
+    }
+}
+
+
+
+
